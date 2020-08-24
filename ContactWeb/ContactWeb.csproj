@@ -181,10 +181,17 @@
     <Compile Include="Migrations\202008180514599_Initial_Identity_Migration.Designer.cs">
       <DependentUpon>202008180514599_Initial_Identity_Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008240923537_CreateContactAndStateTables.cs" />
+    <Compile Include="Migrations\202008240923537_CreateContactAndStateTables.Designer.cs">
+      <DependentUpon>202008240923537_CreateContactAndStateTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\ContactWebConstants.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -365,6 +372,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202008180514599_Initial_Identity_Migration.resx">
       <DependentUpon>202008180514599_Initial_Identity_Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008240923537_CreateContactAndStateTables.resx">
+      <DependentUpon>202008240923537_CreateContactAndStateTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
