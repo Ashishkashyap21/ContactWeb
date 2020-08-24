@@ -1,10 +1,13 @@
 ﻿using ContactWeb.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
+using System.Web.Mvc;
+using System.Web.Security;
 
 namespace ContactWeb
 {
@@ -17,6 +20,8 @@ namespace ContactWeb
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+
+            CreateRolesAndUsers();
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -62,6 +67,30 @@ namespace ContactWeb
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+        private void CreateRolesAndUsers()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+            if (!roleManager.RoleExists("Admin"))
+            {
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+
+                var user = new ApplicationUser();
+                user.UserName = "admin@admin.com";
+                user.Email = "admin@admin.com";
+
+                var usrPass = "Admin@1234";
+                var chkUser = userManager.Create(user, usrPass);
+
+                if (!chkUser.Succeeded) throw new Exception("Could not create admin user");
+                userManager.AddToRole(user.Id, "Admin");
+            }
         }
     }
 }
